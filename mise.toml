@@ -1,21 +1,15 @@
-# Self-contained tool pins so this clone can run on a fresh machine via
-# just `mise install && mise run dev`. Mirrors the joeblew999/* forks
-# used in sibling repos (vm-servers, scrapers-catalogs).
+# Self-contained tool pins so a fresh clone runs via `mise install && mise run dev`.
+# Mirrors joeblew999/* forks pinned in sibling repos.
 
 [tools]
 "aqua:nushell/nushell" = "0.112.2"
 "github:joeblew999/http-nu" = "0.16.0-relay-url.2"
 "github:joeblew999/xs" = "0.12.0-relay-url.2"
-pitchfork = "latest"
 
 [tasks.dev]
-description = "Run the stacks.nu server on http://localhost:4777 — http-nu --datastar --store ./store -w ./www/serve.nu"
+description = "Run the stacks.nu server on http://localhost:4777."
 run = "http-nu --datastar --store ./store :4777 -w ./www/serve.nu"
 
 [tasks.test]
-description = "Run projection + route tests against a throwaway store at /tmp/stacks-test"
+description = "Pure projection + route tests via http-nu eval against a throwaway store."
 run = "http-nu eval --store /tmp/stacks-test ./www/test.nu"
-
-[tasks.lint]
-description = "topiary fmt on every .nu (per scripts/lint.nu)"
-run = "nu scripts/lint.nu"

@@ -1,6 +1,7 @@
 use std/assert
 
 const script_dir = path self | path dirname
+const TEMPLATE_3PANE = [$script_dir "templates" "three-pane.html.j2"] | path join
 
 use ./projection.nu
 use ./stacks *
@@ -921,7 +922,9 @@ assert equal $renamed.name "Renamed via route"
 print "   ok"
 
 print "13. serve.nu: actions registry, keymap, and status bar all reference action ids"
-let template = "/root/stacks.nu/www/templates/three-pane.html.j2"
+# $TEMPLATE_3PANE is the const declared at top of this file. Was a hardcoded
+# /root/stacks.nu/... here that only resolved on cablehead's dev box.
+let template = $TEMPLATE_3PANE
 let main_view = {
   stacks: [{id: "s1" name: "Inbox" sort: "auto" clips: []}]
   selectedStackId: "s1"
