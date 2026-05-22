@@ -5,16 +5,18 @@
 //   node scripts/shoot-design.mjs                  # uses BASE=http://127.0.0.1:4777
 //   BASE=http://other:port node scripts/shoot-design.mjs
 //
-// Requires: tests-browser/node_modules/playwright-core (npm install once),
-// /usr/bin/chromium, a running http-nu server.
+// Requires: tests-browser/node_modules/playwright-core (`mise run test:browser:install`),
+// a system-installed Chrome/Chromium/Edge (auto-detected; override via
+// CHROMIUM_PATH), and a running http-nu server.
 
 import { chromium } from "playwright-core";
+import { findChromium } from "./find-chromium.mjs";
 
 const BASE = process.env.BASE || "http://127.0.0.1:4777";
 const PNG = "/tmp/stacks-design.png";
 
 const browser = await chromium.launch({
-  executablePath: "/usr/bin/chromium",
+  executablePath: findChromium(),
   args: ["--no-sandbox", "--disable-dev-shm-usage"],
 });
 // Wide enough for the design grid (minmax(40rem, 1fr)) to lay tiles 2-up.

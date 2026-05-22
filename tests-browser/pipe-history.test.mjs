@@ -15,6 +15,7 @@ import { spawn } from "node:child_process";
 import { rmSync, mkdtempSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { findChromium } from "./find-chromium.mjs";
 
 const PORT = 4811;
 const BASE = `http://127.0.0.1:${PORT}`;
@@ -47,7 +48,7 @@ function check(label, ok, detail) {
 }
 
 const browser = await chromium.launch({
-  executablePath: "/usr/bin/chromium",
+  executablePath: findChromium(),
   args: ["--no-sandbox", "--disable-dev-shm-usage"],
 });
 const ctx = await browser.newContext();

@@ -3,8 +3,9 @@
 
 [tools]
 "aqua:nushell/nushell" = "0.112.2"
-"github:joeblew999/http-nu" = "0.16.0-relay-url.2"
-"github:joeblew999/xs" = "0.12.0-relay-url.2"
+"github:joeblew999/http-nu" = "0.16.0-relay-url.3"
+"github:joeblew999/xs" = "0.12.0-relay-url.3"
+bun = "1.3.14"
 
 [tasks.dev]
 description = "Run the stacks.nu server on http://localhost:4777."
@@ -13,3 +14,13 @@ run = "http-nu --datastar --store ./store :4777 -w ./www/serve.nu"
 [tasks.test]
 description = "Pure projection + route tests via http-nu eval against a throwaway store."
 run = "http-nu eval --store /tmp/stacks-test ./www/test.nu"
+
+[tasks."test:browser:install"]
+description = "Install tests-browser deps via bun (single binary, isolated node_modules)."
+dir = "tests-browser"
+run = "bun install"
+
+[tasks."test:browser"]
+description = "Run the playwright e2e test (requires system Chrome/Chromium; see tests-browser/README.md)."
+depends = ["test:browser:install"]
+run = "bun tests-browser/pipe-history.test.mjs"

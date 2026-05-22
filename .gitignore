@@ -1,2 +1,4 @@
 store/
 www/static/shots/
+tests-browser/node_modules/
+tests-browser/.bun/
